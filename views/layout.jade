@@ -18,7 +18,11 @@ head
 body
   block content
 
-  != js('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js')
-  != js('app')
+  block scripts
+    != js('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js')
+    != js('handlebars')
+    != js('moment')
+    != js('jquery.observe_field.js')
+    != js('app')
 
 | </html>

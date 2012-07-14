@@ -19,6 +19,8 @@ app.use(assets());
 
 app.set('view engine', 'jade');
 
+app.use(express["static"](__dirname + "/../public"));
+
 require('./routes/routes.js')(app, io);
 
 port = process.env.PORT || process.env.VMC_APP_PORT || 3000;

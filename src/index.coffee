@@ -10,6 +10,9 @@ app.use assets()
 # Set View Engine
 app.set 'view engine', 'jade'
 
+# serve statics assets from public
+app.use express.static(__dirname + "/../public")
+
 require('./routes/routes.js')(app, io)
 
 # Define Port
