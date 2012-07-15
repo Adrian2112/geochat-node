@@ -14,8 +14,6 @@ success = (position) ->
 error = () ->
     "error gelocation"
 
-navigator.geolocation.getCurrentPosition(success, error)
-
 #peticion de lugares a foursqueare
 foursquare_api = (params) ->
   if typeof params != typeof {}
@@ -44,9 +42,25 @@ foursquare_api = (params) ->
 
 refresh_places = (places) ->
   html = Handlebars.compile($("#places_tmpl").html())
-  $("#places").html(html({places: places}))
+  $("#places_list").html(html({places: places}))
+
+
+append_message = (message) ->
+  html = Handlebars.compile($("#place_tmpl").html())
+  $("#messages").append(html(message))
+  scroll_to_bottom("#messages")
+
+scroll_to_bottom = (div_id) ->
+  $(div_id).scrollTop($(div_id)[0]?.scrollHeight)
 
 jQuery ->
+  scroll_to_bottom("#messages")
+  $("#new_message input.text").focus()
+
+  if $("#places_list").length != 0
+    navigator.geolocation.getCurrentPosition(success, error)
+
+  server = io.connect('http://localhost:3000')
 
   $("form#place_query input.query").observe_field 0.5, ->
     places = geochat.places || []
@@ -64,3 +78,20 @@ jQuery ->
    $("form#place_query").submit ->
      foursquare_api({query: $(this).children(".query").val()})
      return false
+   
+   # 
+   # Show place
+   #
+   $("form#new_message").submit ->
+     text_input = $(this).children(".text")
+     place_id_input = $(this).children(".place_id")
+     
+     message = {text: text_input.val(), place_id: place_id_input.val() }
+     server.emit("post_message", message)
+     text_input.val("")
+     message.author = "Me"
+     append_message(message)
+     return false
+
+    server.on "new_message", (message) ->
+      append_message(message)

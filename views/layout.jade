@@ -5,7 +5,7 @@
 // [if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]
 head
   meta(charset='utf-8')
-  title Express CoffeeScript Template
+  title Geochat
   meta(name='description', content='')
   meta(name='author', content='')
   // Mobile Specific
@@ -16,7 +16,9 @@ head
   != css('app')
   
 body
-  block content
+  .container
+    h1 Geochat
+    block content
 
   block scripts
     != js('https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js')
@@ -24,5 +26,6 @@ body
     != js('moment')
     != js('jquery.observe_field.js')
     != js('app')
+    script(src='/socket.io/socket.io.js')
 
 | </html>

@@ -1,0 +1,18 @@
+extends ../layout
+block content
+  h3 #{name}
+  div#messages
+    each message in messages
+      p.message
+        span.author #{message.author}:
+        span.text #{message.text}
+
+  form#new_message
+    input.text
+    input.place_id(type="hidden", value="#{place_id}")
+
+block append scripts
+  script#place_tmpl(type="text/x-handlebars-template")
+    p.message
+      span.author {{author}}:
+      span.text {{text}}

@@ -1,19 +1,17 @@
 extends layout
 block content
-  .container
-    h1 Geochat
-    form#place_query(href="#")
-      | selecciona un lugar: 
-      input.query
+  form#place_query(href="#")
+    | selecciona un lugar: 
+    input.query
 
-    ul#places
+  ul#places_list
 
 
 block append scripts
   script#places_tmpl(type="text/x-handlebars-template")
     {{#each places}}
     li
-      a.4sqr_place(data-id="{{id}}", href="/places/{{id}}")
+      a.4sqr_place(data-id="{{id}}", href="/places/{{id}}/{{name}}")
         {{name}}
     {{/each}}
 

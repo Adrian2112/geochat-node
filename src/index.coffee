@@ -1,10 +1,22 @@
 express = require 'express'
 stylus = require 'stylus'
 assets = require 'connect-assets'
-socket = require('socket.io')
-io = socket.listen(app, { log: false })
+mongoose = require 'mongoose'
+mongoose.connect('mongodb://localhost/geochat')
+
 
 app = express()
+
+http = require('http')
+server = http.createServer(app)
+io = require('socket.io').listen(server, {log: false})
+
+io.configure ->
+  io.set("transports", ["xhr-polling"])
+  io.set("polling duration", 10)
+
+
+
 # Add Connect Assets
 app.use assets()
 # Set View Engine
@@ -18,4 +30,4 @@ require('./routes/routes.js')(app, io)
 # Define Port
 port = process.env.PORT or process.env.VMC_APP_PORT or 3000
 # Start Server
-app.listen port, -> console.log "Listening on #{port}\nPress CTRL-C to stop server."
+server.listen port, -> console.log "Listening on #{port}\nPress CTRL-C to stop server."
