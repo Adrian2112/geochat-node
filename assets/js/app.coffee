@@ -33,7 +33,7 @@ foursquare_api = (params) ->
     data: api_params
     dataType: "json"
     beforeSend: ->
-      $("#places").html("<img src='/images/spinner.gif' />")
+      $("#places_list").html("<img src='/images/spinner.gif' />")
     success: (data) ->
       window.geochat.places = $.map data.response.venues, (e, i) ->
         {name: e.name, id: e.id}
