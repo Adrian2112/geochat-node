@@ -6,6 +6,7 @@ block content
       p.message
         span.author #{message.author}:
         span.text #{message.text}
+        abbr.timeago(title="#{message.date.toISOString()}") #{message.dateString()}
 
   form#new_message
     input.text
@@ -16,3 +17,4 @@ block append scripts
     p.message
       span.author {{author}}:
       span.text {{text}}
+      abbr.timeago(title="{{date}}") {{dateString}}

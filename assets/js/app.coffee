@@ -90,8 +90,13 @@ jQuery ->
      server.emit("post_message", message)
      text_input.val("")
      message.author = "Me"
+     message.date = (new Date).toISOString()
+     message.dateString = moment(message.date).format("LLLL")
      append_message(message)
      return false
+
+    $("abbr.timeago").livequery ->
+      $(this).timeago()
 
     server.on "new_message", (message) ->
       append_message(message)
