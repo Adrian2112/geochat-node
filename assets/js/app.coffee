@@ -60,7 +60,7 @@ jQuery ->
   if $("#places_list").length != 0
     navigator.geolocation.getCurrentPosition(success, error)
 
-  server = io.connect('http://localhost:3000')
+  server = io.connect('/')
 
   $("form#place_query input.query").observe_field 0.5, ->
     places = geochat.places || []
